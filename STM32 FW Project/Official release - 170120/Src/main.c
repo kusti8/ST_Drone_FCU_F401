@@ -1281,7 +1281,7 @@ static void SendMotionData(void)
   
   
   ACC_Value.AXIS_X = euler_ahrs.thx;
-  ACC_Value.AXIS_Y = euler_ahrs.thy
+  ACC_Value.AXIS_Y = euler_ahrs.thy;
   ACC_Value.AXIS_Z = euler_ahrs.thz;
   GYR_Value.AXIS_X = euler_ahrs.X;
   GYR_Value.AXIS_Y = euler_ahrs.Y;
