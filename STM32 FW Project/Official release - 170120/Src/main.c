@@ -1280,12 +1280,12 @@ static void SendMotionData(void)
 
   
   
-  ACC_Value.AXIS_X = acc.AXIS_X;
-  ACC_Value.AXIS_Y = acc.AXIS_Y;
-  ACC_Value.AXIS_Z = acc.AXIS_Z;
-  GYR_Value.AXIS_X = gyro.AXIS_X;
-  GYR_Value.AXIS_Y = gyro.AXIS_Y;
-  GYR_Value.AXIS_Z = gyro.AXIS_Z;
+  ACC_Value.AXIS_X = euler_ahrs.thx;
+  ACC_Value.AXIS_Y = euler_ahrs.thy
+  ACC_Value.AXIS_Z = euler_ahrs.thz;
+  GYR_Value.AXIS_X = euler_ahrs.X;
+  GYR_Value.AXIS_Y = euler_ahrs.Y;
+  GYR_Value.AXIS_Z = euler_ahrs.Z;
   MAG_Value.AXIS_X = mag.AXIS_X;
   MAG_Value.AXIS_Y = mag.AXIS_Y;
   MAG_Value.AXIS_Z = mag.AXIS_Z;

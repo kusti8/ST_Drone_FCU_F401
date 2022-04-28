@@ -8,12 +8,14 @@
 typedef struct
 {
     float q0, q1, q2, q3;
+    float X, Y, Z;
 }QuaternionTypeDef;
 
 // Type define for Euler angle
 typedef struct
 {
     float thx, thy, thz;
+    float X, Y, Z;
 }EulerAngleTypeDef;
 
 

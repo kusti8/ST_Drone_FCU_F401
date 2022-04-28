@@ -10,6 +10,7 @@ float offset[3];
 float cor[3][3];
 
 float q0 = 1, q1 = 0, q2 = 0, q3 = 0;
+float X = 0, Y = 0, Z = 0;
 float gx_off, gy_off, gz_off;
 float mx_mag, my_mag, mz_mag;
 float wbx = 0, wby = 0, wbz = 0;
@@ -28,7 +29,7 @@ void ahrs_fusion_ag(AxesRaw_TypeDef_Float *acc, AxesRaw_TypeDef_Float *gyro, AHR
   float norm;
   float vx, vy, vz;
   float ex, ey, ez;
-  float q0q0, q0q1, q0q2, /*q0q3,*/ q1q1, /*q1q2,*/ q1q3, q2q2, q2q3, q3q3;
+  float q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;
   float halfT;
  
   
@@ -55,9 +56,9 @@ void ahrs_fusion_ag(AxesRaw_TypeDef_Float *acc, AxesRaw_TypeDef_Float *gyro, AHR
   q0q0 = q0*q0;
   q0q1 = q0*q1;
   q0q2 = q0*q2;
-  //q0q3 = q0*q3;
+  q0q3 = q0*q3;
   q1q1 = q1*q1;
-  //q1q2 = q1*q2;
+  q1q2 = q1*q2;
   q1q3 = q1*q3;
   q2q2 = q2*q2;
   q2q3 = q2*q3;
@@ -96,6 +97,11 @@ void ahrs_fusion_ag(AxesRaw_TypeDef_Float *acc, AxesRaw_TypeDef_Float *gyro, AHR
   q2 = q2 + (q0*gyf - q1*gzf + q3*gxf)*halfT;
   q3 = q3 + (q0*gzf + q1*gyf - q2*gxf)*halfT;
 
+  // from the quaternion rotation matrix
+  X = X + ((2*q0q0 + 2*q1q1 - 1)*gxf + (2*q1q2 - 2*q0q3)*gyf + (2*q1q3 + 2*q0q2)*gzf)*SENSOR_SAMPLING_TIME;
+  Y = Y + ((2*q1q2 + 2*q0q3)*gxf + (2*q0q0 + 2*q2q2 - 1)*gyf + (2*q2q3 - 2*q0q1)*gzf)*SENSOR_SAMPLING_TIME;
+  Z = Z + ((2*q1q3 - 2*q0q2)*gxf + (2*q2q3 + 2*q0q1)*gyf + (2*q0q0 + 2*q3q3 - 1)*gzf)*SENSOR_SAMPLING_TIME;
+
   // normalise quaternion
   norm = invSqrt(q0q0 + q1q1 + q2q2 + q3q3); 
   q0 *= norm;
@@ -107,5 +113,8 @@ void ahrs_fusion_ag(AxesRaw_TypeDef_Float *acc, AxesRaw_TypeDef_Float *gyro, AHR
   ahrs->q.q1 = q1;
   ahrs->q.q2 = q2;
   ahrs->q.q3 = q3;
+  ahrs->q.X = X;
+  ahrs->q.Y = Y;
+  ahrs->q.Z = Z;
 
 }

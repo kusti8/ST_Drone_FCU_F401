@@ -99,6 +99,10 @@ void QuaternionToEuler(QuaternionTypeDef *qr, EulerAngleTypeDef *ea)
     ea->thx = atan2(dq0q1+dq2q3, q0q0+q3q3-q1q1-q2q2);
     ea->thy = asin(dq0q2-dq1q3);
 
+    ea->X = qr->X;
+    ea->Y = qr->Y;
+    ea->Z = qr->Z;
+
     /* This part is removed to manage angle >90deg */
 //    if(ea->thx > MAX_RAD || ea->thx < -MAX_RAD)
 //      ea->thx = ea_pre.thx;
